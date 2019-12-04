@@ -17,7 +17,50 @@ Each input file contains one test case. Each case contains the betting informati
 For each test case, print in one line the best bet of each game, and the maximum profit accurate up to 2 decimal places. The characters and the number must be separated by one space.
 
 ### Sample Input:
-
+1.1 2.5 1.7  
+1.2 3.1 1.6  
+4.1 1.2 1.1  
 ### Sample Output:
+T T W 39.31
 
- 
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<vector>
+using namespace std;
+//6:47 -7:00
+int main()
+{
+	freopen("C:\\Users\\chenzhuo\\Desktop\\in.txt","r",stdin);
+	double tmp[3][3];
+	for(int i=0;i<3;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+			cin>>tmp[i][j];
+		}
+	}
+	string ans[3]={"W","T","L"};
+	double all=0.65;
+	for(int i=0;i<3;i++)
+	{
+		double tt=0;
+		int chose=0;
+		for(int j=0;j<3;j++)
+		{
+			if(tmp[i][j]>tt)
+			{
+				tt=tmp[i][j];
+				chose=j;
+				
+			}
+		}
+		all*=tt;
+		cout<<ans[chose]<<" ";
+	}
+	all--;
+	all*=2;
+	printf("%.2f",all);
+}
+```

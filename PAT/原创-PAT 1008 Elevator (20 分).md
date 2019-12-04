@@ -13,7 +13,46 @@ Each input file contains one test case. Each case contains a positive integer N
 For each test case, print the total time on a single line.
 
 ### Sample Input:
+3 2 3 1
 
 ### Sample Output:
-
+41
  
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<vector>
+using namespace std;
+//6:33-6:45 
+int main()
+{
+	freopen("C:\\Users\\chenzhuo\\Desktop\\in.txt","r",stdin);
+	int num;cin>>num;
+	vector<int> tmp(num);
+	for(int i=0;i<num;i++)
+	{
+		cin>>tmp[i];
+	}
+	
+	int now=0;
+	int ans=0;
+	for(int i=0;i<num;i++)
+	{
+		int tt=tmp[i]-now;
+		if(tt>=0)
+		{
+			ans+=tt*6;
+			ans+=5;
+		}
+		else if(tt<0)
+		{
+			ans+=tt*(-4);
+			ans+=5;
+		}
+		now=tmp[i];
+	}
+	cout<<ans;
+	return 0;
+}
+```

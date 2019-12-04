@@ -15,11 +15,77 @@ Each input file contains one test case. Each case consists of two positive numbe
 For each test case, first print in one line `Yes` if N is a palindromic number in base b, or `No` if not. Then in the next line, print N as the number in base b in the form "a​k​​ a​k−1​​ ... a​0​​". Notice that there must be no extra space at the end of output.
 
 ### Sample Input 1:
+27 2
 
 ### Sample Output 1:
-
+Yes
+1 1 0 1 1
 ### Sample Input 2:
+121 5
 
 ### Sample Output 2:
+No
+4 4 1
 
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<vector>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+//9:15
+bool isP(int k)
+{
+	int s=pow(k,0.5);
+	if(k==0||k==1) return false;
+	for(int i=2;i<=s;i++)
+	{
+		if(k%i==0) return false;	
+	}
+	return true;
+}
+int main()
+{
+	//freopen("C:\\Users\\chenzhuo\\Desktop\\in.txt","r",stdin);
+	
+	int num;
+	cin>>num;
+	int d;
+	cin>>d;
+	int tmp=num;
+	int ans[50];
+	int idx=0;
+	while(tmp>0)
+	{
+		
+		ans[idx++]=tmp%d;
+		tmp=tmp/d;
+	}
+	int id=idx;
+	int flag=1;
+	for(int i=0,j=idx-1;i<j;i++,j--)
+	{
+		if(ans[i]!=ans[j])
+			{
+				cout<<"No"<<endl;
+				flag=0;
+				break;
+			}
+	}
+	if(flag)
+	{
+		cout<<"Yes"<<endl;
+	}
+		
+		
+	for(int i=id-1;i>=0;i--)
+	{
+		cout<<ans[i];
+		if(i!=0)
+			cout<<" ";
+	}
+}
+```
  

@@ -11,7 +11,63 @@ Each input file contains one test case which occupies a line containing the thre
 For each test case you should output the Mars RGB value in the following format: first output `#`, then followed by a 6-digit number where all the English characters must be upper-cased. If a single color is only 1-digit long, you must print a `0` to its left.
 
 ### Sample Input:
+1234567899
 
 ### Sample Output:
+Yes
+2469135798
 
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<vector>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+//9:38
+ 
+int main()
+{
+	//freopen("C:\\Users\\chenzhuo\\Desktop\\in.txt","r",stdin);
+	
+	vector<int> tmp(10,0);
+	vector<int> tmp1(10,0);
+	string str1;
+	cin>>str1;
+	for(int i=0;i<str1.size();i++)
+	{
+		tmp[str1[i]-'0']++;
+	}
+	int jin=0;
+	string str2="";
+	for(int i=str1.size()-1;i>=0;i--)
+	{
+		int k=2*(str1[i]-'0')+jin;
+		jin=0;
+		if(k>=10)
+		{
+			k-=10;jin=1;
+		}
+		char c=k+'0';
+		str2=c+str2;
+	}
+	if(jin==1)
+	{
+		str2='1'+str2;
+	}
+	for(int i=0;i<str2.size();i++)
+	{
+		tmp[str2[i]-'0']--;
+	}
+	if(tmp==tmp1) 
+		cout<<"Yes"<<endl;
+	else cout<<"No"<<endl;
+	
+	for(int i=0;i<str2.size();i++)
+	{
+		cout<<str2[i];
+	}
+}
+```
  

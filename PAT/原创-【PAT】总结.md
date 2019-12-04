@@ -1,5 +1,8 @@
 # 原创：【PAT】总结
 
+代码已经流失
+原贴见：[链接](https://chenzhuo.blog.csdn.net/article/details/101081562)
+
 # 【1】格式
 
  
