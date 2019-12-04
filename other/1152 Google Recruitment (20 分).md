@@ -21,3 +21,47 @@ For each test case, print in a line the first K-digit prime in consecutive digit
 ### Sample Output 2:
 
  
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<vector>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+//11:06
+ 
+bool isp(int a)
+{
+	if(a<=1) return false;
+	int k=pow(a,0.5);
+	for(int i=2;i<k;i++)
+	{
+		if(a%i==0) return false;
+	}
+	return true;
+}
+int main()
+{
+	//freopen("C:\\Users\\chenzhuo\\Desktop\\in.txt","r",stdin);
+	int n,m;
+	cin>>n>>m;
+	string s;
+	cin>>s;
+	for(int i=0;i<=n-m;i++)
+	{
+		string str=s.substr(i,m);
+		stringstream ss;ss<<str;
+		int tmp;
+		ss>>tmp;
+		if(isp(tmp))
+		{
+			cout<<str;
+			return 0;
+		}
+	}
+	cout<<"404";
+	
+	
+}
+```

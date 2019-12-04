@@ -6,8 +6,60 @@
 
 **内存消耗 :33.9 MB, 在所有C++提交中击败了5.06%的用户**
 
-这map是有多慢。。
-
+这map是有多慢。。  
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    //注意：一个节点也可以是它自己的祖先
+    //可以认为没有相同的元素。
+    map<TreeNode*,TreeNode*> father;//存父节点
+    map<TreeNode*,int> ans;//存遍历的路径
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        //深度遍历
+        //用字典存相遇结点
+        //1.先dfs遍历
+        if(root==NULL) return NULL;
+        dfs(root);
+        //2.找相遇结点,先把p的路径全部绘制出来
+        while(father[p])
+        {
+            ans[p]=1;
+            p=father[p];
+        }
+        while(father[q])
+        {
+            if(ans[q]==1)
+            {
+                return q;
+            }
+            q=father[q];
+        }
+        return root;//到这里只可能是root了
+    }
+    void dfs(TreeNode* root)
+    {
+        if(root->left!=NULL)
+        {
+            father[root->left]=root;
+            dfs(root->left);
+        }
+        if(root->right!=NULL)
+        {
+            father[root->right]=root;
+            dfs(root->right);
+        }
+    }
+};
+```
 别人家优秀的答案：就是我最开始的想法：DFS
 
 【转】
@@ -24,5 +76,20 @@
 综上也不难写出结果了：<br/>
  </p>
 
-
+```c++
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==p||root==q||!root)return root;//特殊情况1+2
+        
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        
+        if (left && right) return root;//找到了。直接返回
+        if (left) return left;
+        if (right) return right;
+        return NULL;
+    }
+};
+```
  
