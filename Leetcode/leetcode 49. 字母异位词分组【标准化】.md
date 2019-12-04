@@ -10,4 +10,36 @@
 
 **内存消耗 : 20.1 MB, 在Group Anagrams的C++提交中击败了39.45% 的用户**
 
- 
+```c++
+class Solution {
+public:
+    vector<vector<string> > groupAnagrams(vector<string>& strs) {
+        //标准化的练手题 22:25
+        
+        map<string,vector<string> > m;
+        
+        vector<vector<string> > ans;
+        if(strs.size()==0) return ans;
+        for(auto it=strs.begin();it!=strs.end();it++)
+        {
+            m[deal(*it)].push_back(*it);
+        }
+        for(auto it=m.begin();it!=m.end();it++)
+        {
+            vector<string> tmp;
+            for(auto t=(it)->second.begin();t!=(it)->second.end();t++)
+            {
+                tmp.push_back(*t);
+            }
+            ans.push_back(tmp);
+        }
+        return ans;
+    }
+    string deal(string &s)
+    {
+        string ans=s;
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
+``` 

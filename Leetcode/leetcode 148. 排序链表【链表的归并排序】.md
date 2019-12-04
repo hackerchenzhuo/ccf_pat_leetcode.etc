@@ -14,7 +14,65 @@
 
 最后一层一层归并，每一层左右两边都是有序的。
 
- 
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        //归并排序->中间时刻需要断裂键值
+        //快慢指针
+        //
+        return mergesort(head);
+    }
+    ListNode* mergesort(ListNode* head) 
+    {
+        if(head==NULL||head->next==NULL) return head;//递归终点只有一个元素或者没有元素了
+        ListNode* mid=head;
+        ListNode* fast=head;
+        ListNode* slow=head;
+        while(fast!=NULL&&fast->next!=NULL)
+        {
+            fast=fast->next->next;
+            mid=slow;
+            slow=slow->next;
+        }
+        mid->next=NULL;//左边部分的终点处断开
+        ListNode*p1=mergesort(head);
+        ListNode*p2=mergesort(slow);
+        return merge(p1,p2);
+        
+    }
+    
+     ListNode*merge(ListNode* p1,ListNode* p2)
+     {
+         if(p1==NULL)
+         {
+             return p2;
+         }
+         if(p2==NULL)
+         {
+             return p1;
+         }
+         if(p1->val<=p2->val)
+         {
+             p1->next=merge(p1->next,p2);
+             return p1;
+         }
+         else
+         {
+             p2->next=merge(p1,p2->next);
+             return p2;
+         }
+     }
+};
+``` 
 
  
 

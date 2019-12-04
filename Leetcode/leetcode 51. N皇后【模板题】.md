@@ -15,7 +15,7 @@
  判定语句：
 if(ans[j]==i || abs(ans[j]-i)==abs(j-n))//在一对角上或者在一行上
 
-
+![](https://img-blog.csdnimg.cn/20190607211510848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaGVuemh1by5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
  
 
 > 
@@ -39,4 +39,63 @@ if(ans[j]==i || abs(ans[j]-i)==abs(j-n))//在一对角上或者在一行上
         return sss;</p>
 
 
- 
+```c++
+class Solution {
+public:
+    int N;
+ 
+    vector<vector<int> >res;
+    vector<vector<string>> solveNQueens(int n) {
+        //N皇后问题。固定行
+        //回溯
+        N=n;
+        vector<int> ans(N);
+        find(0,ans);
+        vector<vector<string>> sss;
+        for(int i=0;i<res.size();i++)
+        {
+            vector<string> ss;
+            for(int j=0;j<N;j++)
+            {
+                string s="";
+                for(int k=0;k<N;k++)
+                {
+                    s+= k==res[i][j]? 'Q':'.';
+                }
+                ss.push_back(s);
+            }
+            sss.push_back(ss);
+            
+        }
+        return sss;
+    }
+    void find(int n,vector<int> &ans)
+    {
+        if(n==N) 
+        {
+            //cout<<"1"<<endl;
+            res.push_back(ans);
+            return;
+        }
+        
+        for(int i=0;i<N;i++)//只考虑行,对于这N列来说
+        {
+            int ok=1;
+            for(int j=0;j<n;j++)
+            {
+                if(ans[j]==i || abs(ans[j]-i)==abs(j-n))//在一对角上或者在一行上
+                {
+                    ok=0;
+                    break;
+                }
+ 
+            }
+            if(ok)//没有冲突
+                {
+                    ans[n]=i;
+                    find(n+1,ans);
+                }
+        }
+    }
+};
+``` 

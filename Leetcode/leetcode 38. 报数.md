@@ -11,5 +11,33 @@
 
 
 递归求解：
-
+```c++
+class Solution {
+public:
+    string fb(int k){
+        if(k==1)return "1";
+        else {
+            string str=fb(k-1);
+            string ans="";
+            for(int i=0;i<str.size();){
+                int j=0;
+                while(j<str.size()-i){
+                    if(str[i]==str[i+j]){
+                        j++;
+                    }
+                    else break;
+                }
+                char c1=j+'0',c2=str[i];
+                ans+=c1;ans+=c2;
+                i=i+j;      
+            }
+            return ans;
+        }
+        
+    }
+    string countAndSay(int n) {
+        return fb(n);
+    }
+};
+```
  

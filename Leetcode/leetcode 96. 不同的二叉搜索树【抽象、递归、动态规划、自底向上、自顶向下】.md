@@ -23,7 +23,32 @@
  
 
 为了避免重复计算，使用动态规划的打表方法，记录每种情况下有多少种可能的结果。
-
+```c++
+class Solution {
+public:
+    
+    int numTrees(int n) {
+        //二叉搜索树：以一个结点为根，其他结点为左右子树,左边的小于根，右边的大于根
+        //动态规划问题
+        //最终的数量等于 左边的数量*右边的数量
+        if(n<=1) return 1;
+        vector<int> t(n+1,0);
+        t[0]=t[1]=1;
+        return nums(n,t);
+    }
+    int nums(int n,vector<int> &t)
+    {
+        if(t[n]>0) return t[n];
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            ans+= nums(i,t)*nums(n-1-i,t);
+        }
+        t[n]=ans;
+        return ans;
+    }
+};
+```
  
 
 ## 解法二：自底向上
@@ -51,7 +76,26 @@ f(i) = G(i-1)*G(n-i)f(i)=G(i−1)∗G(n−i)</p>
 **内存消耗 : 8.2 MB, 在Unique Binary Search Trees的C++提交中击败了58.16% 的用户**
 
 ### **不使用递归可以大大减少空间消耗**
-
+```c++
+class Solution {
+public:
+    int numTrees(int n) {
+        //二叉搜索树：以一个结点为根，其他结点为左右子树,左边的小于根，右边的大于根
+        //动态规划问题
+        //最终的数量等于 左边的数量*右边的数量
+        int dp[n+1]={0};
+        dp[0]=dp[1]=1;
+        for(int i=2;i<n+1;i++)//自底向上，从2一直到n
+        {
+            for(int j=0;j<i;j++)
+            {
+                dp[i]+=dp[j]*dp[i-j-1];
+            }
+        }
+        return dp[n];
+    }
+};
+```
 代码也简洁了很多！！！！
 
  

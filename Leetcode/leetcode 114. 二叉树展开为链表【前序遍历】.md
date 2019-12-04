@@ -42,4 +42,40 @@ Memory Usage: 10.4 MB, less than 40.69% of C++ online submissions for Flat
 
 （2）按vector数组的顺序依次给root接上尾巴~（记得要把左孩子置空）
 
- 
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<TreeNode*>ans;
+    void flatten(TreeNode* root) {
+        //前序遍历：
+        if(root==NULL) return;
+        preorder(root);
+        int i=1;
+        TreeNode* t=root;
+        while(i<ans.size())
+        {
+            t->right=ans[i];
+            t->left=NULL;
+            t=t->right;
+            i++;
+        }
+        //到最后一个结点的时候肯定没用孩子了，因为是前序遍历。
+    }
+    void preorder(TreeNode* root)
+    {
+        if(root==NULL) return;
+        ans.push_back(root);
+        preorder(root->left);
+        preorder(root->right);
+    }
+};
+``` 

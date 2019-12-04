@@ -35,6 +35,42 @@
 **中序遍历，然后判断是否有序。**
 **如果有序就是二叉搜索树。**
 
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> ans;
+    bool isValidBST(TreeNode* root) {
+        //先中序遍历
+        //然后判断是否有序
+        if(root==NULL) return true;
+        bsort(root);
+        int i=1,j=0;
+        while(i!=ans.size())
+        {
+            if(ans[i]<=ans[j]) return false;
+            i++;j++;
+        }
+        return true;
+        
+    }
+    void bsort(TreeNode* root)
+    {
+        if(root==NULL) return;
+        bsort(root->left);
+        ans.push_back(root->val);
+        bsort(root->right);
+    }
+};
+```
 
  
 
@@ -48,4 +84,43 @@
 
 **内存消耗 : 21.2 MB, 在Validate Binary Search Tree的C++提交中击败了5.16% 的用户**
 
- 
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> ans;
+    int flag=0;
+    bool isValidBST(TreeNode* root) {
+        //先中序遍历
+        //然后判断是否有序
+        if(root==NULL) return true;
+        bsort(root);
+        if(flag) return false;
+        return true;
+        
+    }
+    void bsort(TreeNode* root)
+    {
+        if(flag||root==NULL) return ;//结束搜索
+        bsort(root->left);
+        ans.push_back(root->val);
+        int res;
+        if(!flag&&ans.size()>1&&ans[ans.size()-1]<=ans[ans.size()-2])
+            //还没找到
+            //ans数组有至少2个元素且当前最后一个大于前一个
+        {
+            flag=1;return;
+        }
+        bsort(root->right);
+        
+    }
+};
+``` 

@@ -8,6 +8,43 @@
 
 内存消耗 : 9.3 MB, 在Binary Tree Postorder Traversal的C++提交中击败了25.52% 的用户
 
- 
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+         //中前后
+        //非递归：栈
+        stack<TreeNode*>sta;
+        vector<int> ans;
+        while(root!=NULL||!sta.empty())
+        {
+            
+            while(root!=NULL)
+            {
+                ans.push_back(root->val);
+                sta.push(root);
+                root=root->right;
+            }
+            if(!sta.empty())
+            {
+                root=sta.top();
+                sta.pop();            
+                root=root->left;
+            }
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+``` 
 
  

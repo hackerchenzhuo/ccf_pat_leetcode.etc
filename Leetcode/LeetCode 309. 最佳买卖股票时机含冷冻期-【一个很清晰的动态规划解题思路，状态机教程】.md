@@ -30,6 +30,8 @@ transactions = [buy, sell, cooldown, buy, sell]</p>
 <br/>
 首先申明一下，这个思路并不是我想出来的，只是在LeetCode上看到有人这样解，觉得这个思路很不错，所以写下来作为分享和记录。 <br/>
 从题目中可以看出，不管哪一天，都只能是 buy 或者 sell 或者 cooldown(rest) 三种状态中的一种，而根据题目的约束条件，我们可以画出下图所示的状态图： <br/>
+
+![](https://img-blog.csdn.net/20170731204512323?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemp1UGVjbw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
  
 
 由此图我们可以得到：
@@ -45,6 +47,27 @@ transactions = [buy, sell, cooldown, buy, sell]</p>
 
 好了，话不多说，下面是时间复杂度为O(n)，空间复杂度为O(1)的DP代码：
 
- 
+```c++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.size() <= 1)
+            return 0;
+        int s0 = 0;
+        int s1 = -prices[0];
+        int s2 = INT_MIN;
+        for (int i = 1; i < prices.size(); i++){
+            int pre0 = s0;
+            int pre1 = s1;
+            int pre2 = s2;
+            s0 = max(pre0, pre2);
+            s1 = max(pre0 - prices[i], pre1);
+            s2 = pre1 + prices[i];
+        }
+        //最大利润不可能出现在buy而未sell的时候，所以不考虑s1
+        return max(s0, s2);
+    }
+};
+``` 
 
  

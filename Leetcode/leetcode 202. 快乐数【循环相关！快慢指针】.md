@@ -19,7 +19,7 @@
 
 解法一：先验！
 
-不快乐数必定陷入：**4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4 **的循环中
+不快乐数必定陷入：**4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4**的循环中
 
 所以只要是不快乐数，一定出现4！
 
@@ -28,6 +28,26 @@
 执行用时 : 0 ms, 在Happy Number的C++提交中击败了100.00% 的用户
 
 内存消耗 : 8.1 MB, 在Happy Number的C++提交中击败了74.61% 的用户
+```c++
+class Solution {
+public:
+    bool isHappy(int n) {
+        int ans=n;
+        while(ans!=1)
+        {
+            n=ans;
+            ans=0;
+            while(n>0)
+            {
+                ans+=pow((n%10),2);
+                n/=10;
+            }
+            if(ans==4) return false;
+        }
+        return true;
+    }
+};
+```
 
 方法二：
 
@@ -38,7 +58,31 @@
 执行用时 : 4 ms, 在Happy Number的C++提交中击败了99.27% 的用户
 
 内存消耗 : 8.3 MB, 在Happy Number的C++提交中击败了51.77% 的用户
-
+```c++
+class Solution {
+public:
+    bool isHappy(int n) {
+        int a=n,b=n;
+        while(a!=1&&b!=1)
+        {
+            a=findnext(a);
+            b=findnext(findnext(b));
+            if(a==b&&a!=1) return false; 
+        }
+        return true;
+    }
+    int findnext(int n)
+    {
+        int ans=0;
+        while(n>0)
+        {
+            ans+=pow((n%10),2);
+            n/=10;
+        }
+        return ans;
+    }
+};
+```
  
 
  

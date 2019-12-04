@@ -9,5 +9,28 @@
 执行用时 :28 ms, 在所有C++提交中击败了40.08%的用户
 
 内存消耗 :11.9 MB, 在所有C++提交中击败了7.80%的用户
-
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        map<ListNode *,int> m;
+        //int i=0;//位置
+        while(head!=NULL)
+        {
+            if(m[head]>0) return head;
+            m[head]++;
+            head=head->next;
+        }
+        return NULL;
+    }
+};
+```
 方法二：快慢指针找环，然后从环开始，与起点同时启动，找交点。

@@ -16,5 +16,34 @@
 执行用时 : 4 ms, 在Sort Colors的C++提交中击败了97.62% 的用户
 
 内存消耗 : 8.7 MB, 在Sort Colors的C++提交中击败了8.05% 的用户
-
+```c++
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        //20:22
+        //目的：0->1->2
+        if(nums.size()<=1) return;
+        int p0=0,p1=nums.size()-1,curr=0;
+        while(curr<=p1)
+        {
+            if(nums[curr]==0)
+            {
+                swap(nums[curr],nums[p0]);
+                curr++;p0++;//都是0，那么都加
+            }
+            else if(nums[curr]==2)
+            {
+                swap(nums[curr],nums[p1]);
+                p1--;
+            }
+            else
+            {
+                curr++;//是1则自增
+            }
+        }
+        
+        
+    }
+};
+```
  

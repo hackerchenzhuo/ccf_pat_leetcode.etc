@@ -6,7 +6,31 @@
 
 时间复杂度O（n^2）
 
- 
+ ```c++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        if(height.size()<=1) return 0;
+        else{
+            int size=height.size();
+            int l,r,max=0;
+            for(l=0;l<size;l++){
+                int hmax=0;
+                for(r=size-l-1;r>0;r--){
+                    if(height[l+r]<hmax) continue;
+                    else hmax=height[l+r];
+                    int key=min(height[l+r],height[l])*(r);
+                    if(key>max)
+                        max=key;
+                }
+            }
+            return max;
+        }
+        
+    }
+};
+```
+
 
  法二：
 
@@ -18,4 +42,23 @@
 
 时间复杂度：O（n）
 
- 
+ ```c++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        if(height.size()<=1) return 0;
+        else{
+            int size=height.size();
+            int l=0,r=size-1,max=0;
+            while(l<r){
+                int key=min(height[l],height[r])*(r-l);
+                max=key>max?key:max;
+                height[l]>height[r]?r--:l++;
+            }
+            return max;
+            }
+            
+        }
+        
+    };
+```

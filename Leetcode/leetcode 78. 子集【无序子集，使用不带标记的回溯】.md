@@ -25,5 +25,28 @@
             find(nums,i+1,tt);<br/>
             tt.pop_back();</p>
 
-
+```c++
+class Solution {
+public:
+    vector<vector<int> > ans; 
+    vector<vector<int>> subsets(vector<int>& nums) {
+        if(nums.size()<=0) return ans;
+        vector<int> tt;
+        find(nums,0,tt);
+        return ans;
+    }
+    void find(vector<int>& nums,int begin,vector<int> &tt)
+    {
+        ans.push_back(tt);
+        for(int i=begin;i<nums.size();i++)
+        {
+            {
+            tt.push_back(nums[i]);
+            find(nums,i+1,tt);
+            tt.pop_back();
+            }
+        }
+    }
+};
+```
  

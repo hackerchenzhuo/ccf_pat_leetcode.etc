@@ -12,4 +12,40 @@
 
 实现前序遍历的序列输出
 
- 
+```c++
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+    Node() {}
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+ 
+class Solution {
+public:
+    vector<int> preorder(Node* root) {
+        if(root==NULL) return {};
+        stack<Node*> sta;
+        vector<int> ans; 
+        sta.push(root);
+        while(!sta.empty())
+        {
+            root=sta.top();
+            sta.pop();
+            ans.push_back(root->val);
+            for(int i=root->children.size()-1;i>=0;i--)
+            {
+                sta.push(root->children[i]);
+            }
+            
+        }
+        return ans;
+    }
+};
+``` 

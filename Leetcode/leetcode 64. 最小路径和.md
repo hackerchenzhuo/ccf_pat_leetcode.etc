@@ -38,5 +38,28 @@ O（mn）需要额外的矩阵
 **执行用时 : 8 ms, 在Minimum Path Sum的C++提交中击败了99.05% 的用户**
 
 **内存消耗 : 10.7 MB, 在Minimum Path Sum的C++提交中击败了85.29% 的用户**
-
+```c++
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        //只有两条路
+        if(grid.size()==0) return 0;
+        for(int i=grid.size()-1;i>=0;i--)
+            for(int j=grid[0].size()-1;j>=0;j--)
+            {
+                grid[i][j]=dp(grid,i,j);
+            }
+        return grid[0][0];
+    }
+    
+    int dp(vector<vector<int>>& g,int &x,int &y)
+    {
+        int d=0,r=0;
+        if(x+1<g.size()&&y+1==g[0].size()) return g[x][y]+g[x+1][y];
+        if(y+1<g[0].size()&&x+1==g.size()) return g[x][y]+g[x][y+1];
+        if(y+1<g[0].size()&&x+1<g.size()) return g[x][y]+min(g[x+1][y],g[x][y+1]);
+        return g[x][y];
+    }
+};
+```
  

@@ -11,6 +11,15 @@
 **内存消耗 :9.4 MB, 在所有C++提交中击败了46.39%的用户**
 
 ...你仿佛在逗我。这都可以超过90%。
+```c++
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end(),greater<int>());
+        return nums[k-1];
+    }
+};
+```
 
 方法二：
 
@@ -22,6 +31,21 @@
 
 想法一：如果维护一个长度为4的数组，如果来了一个元素大于最最末尾的，就往后移。那么实际上平均时间复杂度类似于冒泡排序。。<br/>
 想法二：参考的题解。其中提到了用优先队列建立小跟堆的方法：
+```c++
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int,vector<int>,greater<int>> minstack(1,nums[0]);
+        for(int i=1;i<nums.size();i++)
+        {
+            minstack.push(nums[i]);
+            if(minstack.size()>k)
+                minstack.pop();
+        }
+        return minstack.top();
+    }
+};
+```
 
 我寻思也没那么快：
 

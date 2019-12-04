@@ -19,7 +19,53 @@
 **left：这层还剩多少结点**
 **tmp：下一层有多少结点 **
 
-
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    queue<TreeNode*> q;
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root==NULL) return {};
+        vector<vector<int>> ans;
+        vector<int> tmp;
+        q.push(root);
+        int left=1,next=0;
+        while(!q.empty())
+        {
+            root=q.front();
+            q.pop();
+            left--;
+            tmp.push_back(root->val);
+            if(root->left!=NULL) 
+            {
+                q.push(root->left);
+                next++;
+            }
+            if(root->right!=NULL) 
+            {
+                q.push(root->right);
+                next++;
+            }
+            if(left==0)
+            {
+                left=next;
+                next=0;
+                ans.push_back(tmp);
+                tmp.clear();
+            }
+        }
+        return ans;
+    }
+};
+```
  
 
 ## 方法二：

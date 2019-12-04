@@ -9,8 +9,42 @@
 
 果不其然超时了
 
- 
-
+![](https://img-blog.csdnimg.cn/20190610191959934.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaGVuemh1by5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
+```c++
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        //字典无重复词
+        sort(wordDict.begin(),wordDict.end());//从小到大排序
+        //reverse(wordDict.begin(),wordDict.end());//逆序
+        return find(s,0,wordDict);
+    }
+    
+    bool find(string &s,int sta,vector<string>& wordDict)//查找函数
+    {
+        if(sta==s.size()) return true;
+        for(int i=0;i<wordDict.size();i++)
+        {
+            if(comp(s,sta,wordDict[i]))
+            {
+                bool ok=find(s,sta+wordDict[i].size(),wordDict);
+                if(ok) return true;//到终点完全匹配了
+                //否则继续（回溯）
+            }  
+        }
+        return false;//没找到
+    }
+    bool comp(string &s,int &sta,string &word)//比较函数
+    {
+        if(s.size()-sta<word.size()) return false;//此时剩余的长度还不到word的长度
+        for(int i=0;i<word.size();i++)
+        {
+            if(s[sta+i]!=word[i]) return false;
+        }
+        return true;
+    }
+};
+```
  改进：
 
 因为有重复过程，所以用**记忆化搜索法进行回溯剪枝**
@@ -41,5 +75,47 @@ vector&lt;int&gt; tag(s.size()+5,-1);
 **1.一旦判断完该位置不可行，就要置0，下次继续到这直接跳过；**
 **2.一旦判断该位置可行就置1，下次直接返回true**
 
-
+```c++
+class Solution {
+public:
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        //字典无重复词
+        vector<int> tag(s.size()+5,-1);
+        sort(wordDict.begin(),wordDict.end());//从小到大排序
+        //reverse(wordDict.begin(),wordDict.end());//逆序
+        return find(s,0,wordDict,tag);
+    }
+    
+    bool find(string &s,int sta,vector<string>& wordDict,vector<int> &tag)//查找函数
+    {
+        if(tag[sta]>0||sta==s.size()) return true;//该处搜索过
+        if(tag[sta]==0) return false;
+        for(int i=0;i<wordDict.size();i++)
+        {
+            if(comp(s,sta,wordDict[i]))
+            {
+                bool ok=find(s,sta+wordDict[i].size(),wordDict,tag);
+                if(ok) 
+                {
+                    tag[sta]=1;
+                    return true;//到终点完全匹配了
+                }
+                //否则继续（回溯）
+                else tag[sta]=0;
+            }  
+        }
+        return false;//没找到
+    }
+    bool comp(string &s,int &sta,string &word)//比较函数
+    {
+        if(s.size()-sta<word.size()) return false;//此时剩余的长度还不到word的长度
+        for(int i=0;i<word.size();i++)
+        {
+            if(s[sta+i]!=word[i]) return false;
+        }
+        return true;
+    }
+};
+```
  

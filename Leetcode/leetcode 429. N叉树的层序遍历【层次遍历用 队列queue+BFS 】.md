@@ -17,7 +17,58 @@
 > 
 ** int left=1,next=0;//left：该层剩余多少；next：下一层有多少**
 
-
+```c++
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+    Node() {}
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+class Solution {
+public:
+    //层次遍历用BFS 队列
+    
+    vector<vector<int> > ans;
+    vector<int> tmp;
+    vector<vector<int>> levelOrder(Node* root) {
+        if(root==NULL) return {};
+        queue<Node*> q;
+        q.push(root);
+        int left=1,next=0;//left：该层剩余多少；next：下一层有多少
+        while(!q.empty())//q不为空
+        {
+            root=q.front();
+            q.pop();
+            left--;
+            tmp.push_back(root->val);
+            for(int i=0;i<root->children.size();i++)
+            {
+                next++;
+                q.push(root->children[i]);
+            }
+            
+            if(left==0) //这一层遍历结束了
+            {
+                cout<<"1"<<endl;
+                ans.push_back(tmp);
+                tmp.clear();
+                left=next;
+                next=0;
+            }
+            
+        }
+        return ans;
+    }
+    
+};
+```
  
 
 方法二：DFS
@@ -39,5 +90,42 @@
 **Runtime: 144 ms, faster than 97.35% of C++ online submissions for N-ary Tree Level Order Traversal.**
 
 **Memory Usage: 34 MB, less than 40.79% of C++ online submissions for N-ary Tree Level Order Traversal.**
-
+```c++
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+    Node() {}
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+class Solution {
+public:
+    //DFS方法
+    vector<vector<int> > ans;
+    vector<vector<int>> levelOrder(Node* root) {
+        if(root==NULL) return {};
+        dfs(root,0);
+        return ans;
+    }
+    void dfs(Node* root,int n)
+    {
+        if(n>=ans.size())
+        {
+            ans.push_back({});
+        }
+        ans[n].push_back(root->val);
+        for(int i=0;i<root->children.size();i++)
+        {
+            dfs(root->children[i],n+1);
+        }
+    }
+    
+};
+```
  

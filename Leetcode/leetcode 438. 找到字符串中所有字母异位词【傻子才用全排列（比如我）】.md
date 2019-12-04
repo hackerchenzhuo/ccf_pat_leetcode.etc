@@ -18,6 +18,55 @@ remember:
     //因为有红黑树，所以时间复杂度O（2lgn+n），还好<br/>
     //visit数组记录是否访问过,level定义当前到哪了</p>
 
+```c++
+class Solution {
+public:
+    //用map
+    //在全排列中检索。
+    //因为有红黑树，所以时间复杂度O（2lgn+n），还好
+    //visit数组记录是否访问过,level定义当前到哪了
+    map<string,int> m;
+    void dfs(string s,int level,vector<int> &visited,string now="")//找全排列
+    {
+        if(level>=s.size()){//满了
+            //cout<<now<<endl;
+            if(m[now]!=1)
+                m[now]=1;
+            return;
+        }
+        for(int i=0;i<s.size();i++){
+            if(visited[i]==1) continue;
+            visited[i]=1;
+            string t=now;
+            t=t+s[i];
+            
+            dfs(s,level+1,visited,t);
+            visited[i]=0;
+        }
+        
+    }
+    vector<int> findAnagrams(string s, string p) {
+        
+        vector<int> ans;
+        if(s.size()<p.size()) return ans;
+        vector<int>vis(p.size(),0);
+        int sz=s.size();
+        dfs(p,0,vis);
+        for(int i=0;i<=sz-p.size();i++)
+        {
+            //cout<<s.substr(i,p.size())<<endl;
+            if(m[s.substr(i,p.size())]==1)
+            {
+                ans.push_back(i);
+            }
+        }
+        return ans;
+        
+        
+        
+    }
+};
+```
 
  
 
@@ -42,7 +91,74 @@ remember:
 
  
 
-好歹是通过了。。。
+好歹是通过了。。。 
+
+```c++
+class Solution {
+public:
+    //统计各字母出现的次数即可
+    //存储空间可以共用
+    map<int,int> m;
+    bool jug(string s,map<int,int> &m,char k=' ')
+    {
+        int flag=0;
+        if(k==' ')
+        {
+         for(int i=0;i<s.size();i++)
+        {
+            if(m[s[i]-'a']==0) flag=1;
+            m[s[i]-'a']--;
+        }
+        }
+        else
+        {
+            m[k-'a']++;
+            if(m[s[s.size()-1]-'a']==0)
+            {
+                 flag=1;
+            }
+            m[s[s.size()-1]-'a']--;
+        }
+ 
+        if(flag) return false;
+        for(auto it=m.begin();it!=m.end();it++)
+        {
+            if(it->second!=0) return false;
+        }
+        return true;
+        
+    }
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        if(s.size()<p.size()) return ans;
+        map<int,int> m;
+        for(int i=0;i<26;i++)
+        {
+            m[i]=0;
+        }
+        for(int i=0;i<p.size();i++)
+        {
+            m[p[i]-'a']++;
+        }
+        
+          if(jug(s.substr(0,p.size()),m))
+            {
+                ans.push_back(0);
+            }
+        for(int i=1;i<=s.size()-p.size();i++)
+        {
+            if(jug(s.substr(i,p.size()),m,s[i-1]))
+            {
+                ans.push_back(i);
+            }
+        }
+        return ans;
+        
+        
+        
+    }
+};
+```
 
  优化：
 
@@ -58,4 +174,33 @@ remember:
 
 内存消耗 : 10.3 MB, 在Find All Anagrams in a String的C++提交中击败了72.09% 的用户
 
- 
+```c++
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        if(p.size()>s.size()){
+            return {};
+        }
+        vector<int> res;
+        vector<int> vs(26,0);
+        vector<int> vp(26,0);
+        int start = 0;
+        for(int i = 0;i < p.size();i++){
+            vs[s[i]-'a']++;
+            vp[p[i]-'a']++;
+        }
+        if(vs==vp){
+            res.push_back(start);
+        }
+        for(int i = p.size() ;i < s.size();i++){
+            vs[s[start]-'a']--;
+            vs[s[i]-'a']++;
+            start++;
+            if(vs==vp){
+                res.push_back(start);
+            }
+        }
+        return res;
+    }
+};
+``` 

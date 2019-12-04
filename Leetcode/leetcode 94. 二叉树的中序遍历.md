@@ -21,7 +21,30 @@
 来源：力扣（LeetCode）<br/>
 链接：https://leetcode-cn.com/problems/binary-tree-inorder-traversal<br/>
 递归解法：
-
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> ans;
+    vector<int> inorderTraversal(TreeNode* root) {
+        //前中后
+        if(root==NULL) return {};
+        inorderTraversal(root->left);
+        ans.push_back(root->val);
+        inorderTraversal(root->right);
+        return ans;
+    }
+    
+};
+```
  
 
 非递归：【使用栈】
@@ -30,4 +53,40 @@
 
 内存消耗 : 9.3 MB, 在Binary Tree Inorder Traversal的C++提交中击败了34.53% 的用户
 
- 
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+ 
+    vector<int> inorderTraversal(TreeNode* root) {
+        //非递归：栈
+        stack<TreeNode*>sta;
+        vector<int> ans;
+        while(root!=NULL||!sta.empty())
+        {
+            while(root!=NULL)
+            {
+                sta.push(root);
+                root=root->left;
+            }
+            if(!sta.empty())
+            {
+                root=sta.top();
+                sta.pop();
+                ans.push_back(root->val);
+                root=root->right;
+            }
+        }
+        return ans;
+    }
+    
+};
+``` 

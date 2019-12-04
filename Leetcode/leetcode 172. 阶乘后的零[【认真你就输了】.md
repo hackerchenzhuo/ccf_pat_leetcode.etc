@@ -11,7 +11,20 @@
 所以5是基准。千万不要乘，不要急，多想想。
 
 第一印象往往是不准的
-
+```c++
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int ans=0;
+        while(n>0)
+        {
+            ans+=n/5;
+            n/=5;
+        }
+        return ans;     
+    }
+};
+```
  
 
  
